@@ -5,6 +5,10 @@ import Button from "../components/Button";
 import Loader from "../components/Loader";
 import { postLogin } from "../services/formServices";
 
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+AOS.init();
+
 export default function Login() {
   const navigate = useNavigate();
 
@@ -55,6 +59,7 @@ export default function Login() {
       <form
         className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2"
         id="loginForm"
+        data-aos="fade" data-aos-duration='500'
       >
         <input
           className="p-2 border outline-none"
