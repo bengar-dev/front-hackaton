@@ -6,6 +6,7 @@ export default function Button(props) {
 
     if(props.type === "submit") classBtn = "bg-emerald-300 hover:bg-emerald-400"
     else if(props.type === "classic") classBtn = "bg-zinc-100 hover:bg-zinc-200"
+    else if(props.type === "classic-alt") classBtn = "bg-zinc-200 hover:bg-zinc-300"
     else if(props.type === "delete") classBtn ="bg-red-300 hover:bg-red-500"
     else if(props.type === "edit") classBtn = "bg-orange-300 hover:bg-orange-500"
 

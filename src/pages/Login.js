@@ -40,7 +40,7 @@ export default function Login() {
     e.preventDefault();
     if (props.type === "classic") {
       navigate("/register");
-    } else if (props.type === "delete") {
+    } else if (props.type === "classic-alt") {
       navigate("/forgot_password");
     } else if (props.type === "submit") {
       setLoaderState(true);
@@ -77,7 +77,7 @@ export default function Login() {
 
         <Button type="submit" text="Authentication" func={handleClick} />
         <Button type="classic" text="Inscription" func={handleClick} />
-        <Button type="delete" text="Mot de passe oublié ?" func={handleClick} />
+        <Button type="classic-alt" text="Mot de passe oublié ?" func={handleClick} />
       </form>
     </div>
   );

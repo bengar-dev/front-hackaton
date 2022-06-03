@@ -644,6 +644,11 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(244 63 94 / var(--tw-bg-opacity));
 }
 
+.bg-zinc-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(228 228 231 / var(--tw-bg-opacity));
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -718,6 +723,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:bg-orange-500:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(249 115 22 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-zinc-300:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 768px) {
