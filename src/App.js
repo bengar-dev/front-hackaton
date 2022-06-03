@@ -9,7 +9,7 @@ import CustomText from './pages/CustomText';
 
 function App() {
   return (
-    <div className="min-h-screen bg-zinc-100">
+    <>
       <h1 className="absolute z-40 p-2 w-full text-center font-medium text-xl">Hackathon 2022</h1>
       <Routes>
         <Route path='/' element={<Hello />} />
@@ -18,7 +18,7 @@ function App() {
         <Route path='/forgot_password' element={<ForgotPassword />} />
         <Route path='/custom_text/:text' element={<CustomText />} />
       </Routes>
-    </div>
+    </>
   );
 }
 

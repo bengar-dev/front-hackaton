@@ -512,6 +512,30 @@ Ensure the default browser behavior of the `hidden` attribute.
   top: 0px;
 }
 
+.bottom-0 {
+  bottom: 0px;
+}
+
+.bottom-10 {
+  bottom: 2.5rem;
+}
+
+.right-10 {
+  right: 2.5rem;
+}
+
+.bottom-20 {
+  bottom: 5rem;
+}
+
+.right-20 {
+  right: 5rem;
+}
+
+.top-20 {
+  top: 5rem;
+}
+
 .z-40 {
   z-index: 40;
 }
@@ -526,10 +550,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .z-30 {
   z-index: 30;
-}
-
-.mt-40 {
-  margin-top: 10rem;
 }
 
 .flex {
@@ -564,16 +584,16 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: center;
 }
 
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
-}
-
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
 }
 
 .rounded {
@@ -584,14 +604,19 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-width: 1px;
 }
 
-.bg-zinc-100 {
+.bg-zinc-300 {
   --tw-bg-opacity: 1;
-  background-color: rgb(244 244 245 / var(--tw-bg-opacity));
+  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
 }
 
 .bg-emerald-300 {
   --tw-bg-opacity: 1;
   background-color: rgb(110 231 183 / var(--tw-bg-opacity));
+}
+
+.bg-zinc-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 244 245 / var(--tw-bg-opacity));
 }
 
 .bg-red-300 {
@@ -604,14 +629,19 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(253 186 116 / var(--tw-bg-opacity));
 }
 
-.bg-zinc-300 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
-}
-
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.bg-red-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 226 226 / var(--tw-bg-opacity));
+}
+
+.bg-rose-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 63 94 / var(--tw-bg-opacity));
 }
 
 .p-2 {
@@ -620,10 +650,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .p-4 {
   padding: 1rem;
-}
-
-.pt-40 {
-  padding-top: 10rem;
 }
 
 .pt-10 {
