@@ -9,10 +9,10 @@ import CustomText from './pages/CustomText';
 
 function App() {
   return (
-    <div className="bg-zinc-100">
+    <div className="min-h-screen bg-zinc-100">
       <h1 className="absolute z-40 p-2 w-full text-center font-medium text-xl">Hackathon 2022</h1>
       <Routes>
-        <Route path='/test' element={<Hello />} />
+        <Route path='/' element={<Hello />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/forgot_password' element={<ForgotPassword />} />
