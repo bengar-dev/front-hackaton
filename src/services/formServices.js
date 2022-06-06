@@ -22,7 +22,15 @@ export const postRegister = (content, responseHandler) => {
   })
   .then((response) => (response.json()))
   .then(answer => {
-    responseHandler(answer)
+    const newAnswer = {
+      ...answer,
+      type: "register"
+    }
+    responseHandler(newAnswer)
+  })
+  .catch(error => {
+    console.log(error)
+    responseHandler("false")
   })
 };
 
@@ -36,10 +44,13 @@ export const verifUsername = (content, responseHandler) => {
   })
   .then((response) => response.json())
   .then(answer => {
-    responseHandler(answer)
+    const newAnswer = {
+      input: answer,
+      type: "verifUsername"
+    }
+    responseHandler(newAnswer)
   })
   .catch((error) => {
-    console.log("erreur fetch")
-    responseHandler("error")
+    responseHandler("false")
   })
 }

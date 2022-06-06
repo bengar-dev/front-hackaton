@@ -48,25 +48,32 @@ export default function Register() {
   function backendResponseHandler(response) {
     setTimeout(() => {
         setLoaderState(false)
-        if(typeof response !== "string") {
+        if(response.type === "register") {
           setError("valid")
           setMessage("Votre compte a bien été créé")
           setTimeout(() => {
             navigate('/Login')
           }, 1500)
         }
-       /* else if(response === 0) {
+        else if(response === "false") {
           setError("error")
-          setMessage("Username déjà existant")
-        }*/
-        else {
-          setError("error")
-          setMessage("Email déjà existant")
+          setMessage("Erreur de communication avec le serveur")
           setTimeout(() => {
             setMessage("")
           }, 1500)
         }
-        //setErrorState
+        else if(response.type === "verifUsername") {
+          if(response.input === 1) {
+            setError("error")
+            setMessage("Username déjà existant")          }
+            else if(response.input === 2) {
+              setError("error")
+              setMessage("Email déjà existant")
+            }
+            else if(response.input === 0) {
+              setMessage("")
+            }
+        }
     }, 1000)
   }
 
@@ -82,7 +89,7 @@ export default function Register() {
   };
 
   const handleVerifUsername = (e) => {
-    /*verifUsername(formContent.username, backendResponseHandler)*/
+    verifUsername(e.target.value, backendResponseHandler)
   }
 
   return (
@@ -102,6 +109,7 @@ export default function Register() {
         />
         <input
           value={formContent.email}
+          onBlur={(e) => handleVerifUsername(e)}
           onChange={(e) => updateFormData(e)}
           className="p-2 border outline-none"
           type="email"
