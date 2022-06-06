@@ -55,10 +55,10 @@ export default function Register() {
             navigate('/Login')
           }, 1500)
         }
-        else if(response === 0) {
+       /* else if(response === 0) {
           setError("error")
           setMessage("Username déjà existant")
-        }
+        }*/
         else {
           setError("error")
           setMessage("Email déjà existant")
@@ -82,7 +82,7 @@ export default function Register() {
   };
 
   const handleVerifUsername = (e) => {
-    verifUsername(formContent.username, backendResponseHandler)
+    /*verifUsername(formContent.username, backendResponseHandler)*/
   }
 
   return (
