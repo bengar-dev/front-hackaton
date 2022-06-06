@@ -9,6 +9,7 @@ export default function AlertMessage(props) {
   //à modifier avec notre fonction qui gère les erreurs
   let classAlertMsg = ""
   if(props.type === "error") classAlertMsg = "bg-rose-500"
+  else if(props.type === "valid") classAlertMsg = "bg-emerald-400"
 
   return (
     <div className={`absolute top-20 right-20 shadow-lg p-2 rounded flex items-center justify-center ${classAlertMsg}`} data-aos="fade-down" data-aos-duration='500'>

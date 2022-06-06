@@ -23,6 +23,7 @@ export default function Register() {
   
   const [loaderState, setLoaderState] = useState(false)
   const [message, setMessage] = useState("")
+  const [error, setError] = useState("")
 
   //gestion des changements sur nos inputs
   const updateFormData = (e) => {
@@ -46,7 +47,13 @@ export default function Register() {
   function backendResponseHandler(response) {
     setTimeout(() => {
         setLoaderState(false)
-        console.log(response)
+        if(response) {
+          setError("valid")
+          setMessage("Votre compte a bien été créé")
+          setTimeout(() => {
+            navigate('/Login')
+          }, 1500)
+        }
         //setErrorState
     }, 1000)
   }
@@ -65,6 +72,7 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
        {loaderState && <Loader />}
+       {message !== "" && <AlertMessage type={error} text={message}  />}
       <form className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2" data-aos="fade" data-aos-duration='500'>
         <input
           value={formContent.username}
@@ -93,9 +101,6 @@ export default function Register() {
           id="password"
           placeholder="password"
         />
-
-        {message !== "" && <AlertMessage text={message} />}
-
         <Button type="submit" text="S'enregistrer" func={handleClick} />
         <Button
           type="classic"
