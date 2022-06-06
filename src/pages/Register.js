@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Button from "../components/Button";
 
-import { postRegister } from "../services/formServices";
+import { postRegister, verifUsername } from "../services/formServices";
 import AlertMessage from "../components/AlertMessage";
 
 import AOS from 'aos'
@@ -27,11 +27,12 @@ export default function Register() {
 
   //gestion des changements sur nos inputs
   const updateFormData = (e) => {
-    if (e.target.id === "username")
+    if (e.target.id === "username") {
       setFormContent({
         ...formContent,
         username: e.target.value,
       });
+    }
     else if (e.target.id === "password")
       setFormContent({
         ...formContent,
@@ -75,12 +76,17 @@ export default function Register() {
     else if (props.type === "classic") navigate("/login");
   };
 
+  const handleVerifUsername = (e) => {
+    verifUsername(formContent.username, backendResponseHandler)
+  }
+
   return (
     <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
        {loaderState && <Loader />}
        {message !== "" && <AlertMessage type={error} text={message}  />}
       <form className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2" data-aos="fade" data-aos-duration='500'>
         <input
+          onBlur={(e) => handleVerifUsername(e)}
           value={formContent.username}
           onChange={(e) => updateFormData(e)}
           className="p-2 border outline-none"

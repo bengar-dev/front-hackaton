@@ -13,7 +13,7 @@ export const postLogin = (content, responseHandler) => {
 };
 
 export const postRegister = (content, responseHandler) => {
-  fetch(`${BACKEND_ROOT}/user/crezaeazeation.php`, {
+  fetch(`${BACKEND_ROOT}/user/creation.php`, {
     method: "POST",
     headers: {
       "Accept": 'application/json',
@@ -28,3 +28,22 @@ export const postRegister = (content, responseHandler) => {
     responseHandler("error")
   })
 };
+
+export const verifUsername = (content, responseHandler) => {
+  fetch(`${BACKEND_ROOT}/user/check_login.php`, {
+    method: "GET",
+    headers: {
+      "Accept": 'application/json',
+  },
+    body: JSON.stringify(content),
+  })
+  .then((response) => (response.json()))
+  .then(answer => {
+    console.log('ok')
+    responseHandler(answer)
+  })
+  .catch((error) => {
+    console.log('erreur')
+    responseHandler("error")
+  })
+}
