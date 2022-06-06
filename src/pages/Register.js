@@ -48,13 +48,18 @@ export default function Register() {
   function backendResponseHandler(response) {
     setTimeout(() => {
         setLoaderState(false)
-        if(response !== "error") {
+        if(typeof response !== "string") {
           setError("valid")
           setMessage("Votre compte a bien été créé")
           setTimeout(() => {
             navigate('/Login')
           }, 1500)
-        } else {
+        }
+        else if(response === 0) {
+          setError("error")
+          setMessage("Username déjà existant")
+        }
+        else {
           setError("error")
           setMessage("Email déjà existant")
           setTimeout(() => {

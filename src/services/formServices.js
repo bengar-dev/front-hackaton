@@ -24,26 +24,22 @@ export const postRegister = (content, responseHandler) => {
   .then(answer => {
     responseHandler(answer)
   })
-  .catch((error) => {
-    responseHandler("error")
-  })
 };
 
 export const verifUsername = (content, responseHandler) => {
   fetch(`${BACKEND_ROOT}/user/check_login.php`, {
-    method: "GET",
+    method: "POST",
     headers: {
       "Accept": 'application/json',
   },
     body: JSON.stringify(content),
   })
-  .then((response) => (response.json()))
+  .then((response) => response.json())
   .then(answer => {
-    console.log('ok')
     responseHandler(answer)
   })
   .catch((error) => {
-    console.log('erreur')
+    console.log("erreur fetch")
     responseHandler("error")
   })
 }
