@@ -13,7 +13,7 @@ export const postLogin = (content, responseHandler) => {
 };
 
 export const postRegister = (content, responseHandler) => {
-  fetch(`${BACKEND_ROOT}/user/creation.php`, {
+  fetch(`${BACKEND_ROOT}/user/crezaeazeation.php`, {
     method: "POST",
     headers: {
       "Accept": 'application/json',
@@ -23,5 +23,8 @@ export const postRegister = (content, responseHandler) => {
   .then((response) => (response.json()))
   .then(answer => {
     responseHandler(answer)
+  })
+  .catch((error) => {
+    responseHandler("error")
   })
 };
