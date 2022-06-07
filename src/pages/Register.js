@@ -4,15 +4,16 @@ import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader";
 import Button from "../components/Button";
 
+import { useSelector, useDispatch } from "react-redux";
+import { errorTranslator } from "../services/basicServices";
 import { postRegister, verifUsername } from "../services/formServices";
 import AlertMessage from "../components/AlertMessage";
 
-import AOS from 'aos'
-import 'aos/dist/aos.css'
+import AOS from "aos";
+import "aos/dist/aos.css";
 AOS.init();
 
 export default function Register() {
-
   const navigate = useNavigate();
 
   const [formContent, setFormContent] = useState({
@@ -20,10 +21,15 @@ export default function Register() {
     email: "",
     password: "",
   });
-  
-  const [loaderState, setLoaderState] = useState(false)
-  const [message, setMessage] = useState("")
-  const [error, setError] = useState("")
+
+  const [loaderState, setLoaderState] = useState(false);
+
+  const {alertMsg} = useSelector(state => ({
+    ...state.formReducer
+  }))
+
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   //gestion des changements sur nos inputs
   const updateFormData = (e) => {
@@ -32,8 +38,7 @@ export default function Register() {
         ...formContent,
         username: e.target.value,
       });
-    }
-    else if (e.target.id === "password")
+    } else if (e.target.id === "password")
       setFormContent({
         ...formContent,
         password: e.target.value,
@@ -43,38 +48,35 @@ export default function Register() {
         ...formContent,
         email: e.target.value,
       });
-  }
+  };
 
   function backendResponseHandler(response) {
     setTimeout(() => {
-        setLoaderState(false)
-        if(response.type === "register") {
-          setError("valid")
-          setMessage("Votre compte a bien été créé")
-          setTimeout(() => {
-            navigate('/Login')
-          }, 1500)
+      setLoaderState(false);
+      if (response.type === "register") {
+        setError("valid");
+        setMessage(errorTranslator(404))
+        setTimeout(() => {
+          navigate("/Login");
+        }, 1500);
+      } else if (response === "false") {
+        setError("error");
+        setMessage("Erreur de communication avec le serveur");
+        setTimeout(() => {
+          setMessage("");
+        }, 1500);
+      } else if (response.type === "verifUsername") {
+        if (response.input === 1) {
+          setError("error");
+          setMessage("Username déjà existant");
+        } else if (response.input === 2) {
+          setError("error");
+          setMessage("Email déjà existant");
+        } else if (response.input === 0) {
+          setMessage("");
         }
-        else if(response === "false") {
-          setError("error")
-          setMessage("Erreur de communication avec le serveur")
-          setTimeout(() => {
-            setMessage("")
-          }, 1500)
-        }
-        else if(response.type === "verifUsername") {
-          if(response.input === 1) {
-            setError("error")
-            setMessage("Username déjà existant")          }
-            else if(response.input === 2) {
-              setError("error")
-              setMessage("Email déjà existant")
-            }
-            else if(response.input === 0) {
-              setMessage("")
-            }
-        }
-    }, 1000)
+      }
+    }, 1000);
   }
 
   // gestion des buttons
@@ -82,21 +84,24 @@ export default function Register() {
     e.preventDefault();
     const props = JSON.parse(e.target.value);
     if (props.type === "submit") {
-      setLoaderState(true)
-      postRegister(formContent, backendResponseHandler)
-    }
-    else if (props.type === "classic") navigate("/login");
+      setLoaderState(true);
+      postRegister(formContent, backendResponseHandler);
+    } else if (props.type === "classic") navigate("/login");
   };
 
   const handleVerifUsername = (e) => {
-    verifUsername(e.target.value, backendResponseHandler)
-  }
+    verifUsername(e.target.value, backendResponseHandler);
+  };
 
   return (
     <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
-       {loaderState && <Loader />}
-       {message !== "" && <AlertMessage type={error} text={message}  />}
-      <form className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2" data-aos="fade" data-aos-duration='500'>
+      {loaderState && <Loader />}
+      {message !== "" && <AlertMessage type={error} text={message} />}
+      <form
+        className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2"
+        data-aos="fade"
+        data-aos-duration="500"
+      >
         <input
           onBlur={(e) => handleVerifUsername(e)}
           value={formContent.username}

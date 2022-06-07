@@ -34,8 +34,18 @@ export default function Login() {
   function backendResponseHandler(response) {
     setTimeout(() => {
       setLoaderState(false);
-      console.log(response);
-      //setErrorState
+      if (response.type === "login") {
+        console.log('ok auth')
+        /*setError("valid");
+        setMessage(errorTranslator(404))*/
+      } else if (response === "false") {
+        console.log('erreur login')
+        /*setError("error");
+        setMessage("Erreur de communication avec le serveur");
+        setTimeout(() => {
+          setMessage("");
+        }, 1500);*/
+      }
     }, 1000);
   }
 

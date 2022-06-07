@@ -1,14 +1,17 @@
 const INITIAL_STATE = {
-    userForm: {}
+    alertMsg: {
+        statut: "",
+        msg: ""
+    }
 }
 
 function formReducer(state = INITIAL_STATE, action) {
 
     switch(action.type) {
-        case 'REGISTER': {
+        case 'ALERTMSG': {
             return {
                 ...state,
-                userForm: action.payload
+                alertMsg: action.payload
             }
         }
     }

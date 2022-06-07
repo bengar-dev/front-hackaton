@@ -8,7 +8,14 @@ export const postLogin = (content, responseHandler) => {
   })
   .then((response) => (response.json()))
   .then(answer => {
-    responseHandler(answer)
+    const newAnswer = {
+      ...answer,
+      type: "login"
+    }
+    responseHandler(newAnswer)
+  })
+  .catch(error => {
+    responseHandler("false")
   })
 };
 
