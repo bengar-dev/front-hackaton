@@ -36,8 +36,10 @@ export const postRegister = (content, responseHandler) => {
     responseHandler(newAnswer)
   })
   .catch(error => {
-    console.log(error)
-    responseHandler("false")
+    const newError = {
+      type: "errRegister"
+    }
+    responseHandler(newError)
   })
 };
 

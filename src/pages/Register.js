@@ -14,22 +14,19 @@ import "aos/dist/aos.css";
 AOS.init();
 
 export default function Register() {
+  
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const [formContent, setFormContent] = useState({
     username: "",
     email: "",
     password: "",
   });
-
   const [loaderState, setLoaderState] = useState(false);
-
   const {alertMsg} = useSelector(state => ({
     ...state.formReducer
   }))
-
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
 
   //gestion des changements sur nos inputs
   const updateFormData = (e) => {
@@ -50,31 +47,19 @@ export default function Register() {
       });
   };
 
-  function backendResponseHandler(response) {
+  //fonction de gestion des erreurs
+  const backendResponseHandler = (response) => {
     setTimeout(() => {
       setLoaderState(false);
-      if (response.type === "register") {
-        setError("valid");
-        setMessage(errorTranslator(404))
+      const msgError = errorTranslator(response.type, response.input)
+      dispatch({
+        type: "ALERTMSG",
+        payload: msgError
+      })
+      if(alertMsg.type === "register") {
         setTimeout(() => {
-          navigate("/Login");
-        }, 1500);
-      } else if (response === "false") {
-        setError("error");
-        setMessage("Erreur de communication avec le serveur");
-        setTimeout(() => {
-          setMessage("");
-        }, 1500);
-      } else if (response.type === "verifUsername") {
-        if (response.input === 1) {
-          setError("error");
-          setMessage("Username déjà existant");
-        } else if (response.input === 2) {
-          setError("error");
-          setMessage("Email déjà existant");
-        } else if (response.input === 0) {
-          setMessage("");
-        }
+          navigate('/Login')
+        }, 1500)
       }
     }, 1000);
   }
@@ -89,6 +74,7 @@ export default function Register() {
     } else if (props.type === "classic") navigate("/login");
   };
 
+  // verification à la sortie du champ de l'username/email
   const handleVerifUsername = (e) => {
     verifUsername(e.target.value, backendResponseHandler);
   };
@@ -96,7 +82,7 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
       {loaderState && <Loader />}
-      {message !== "" && <AlertMessage type={error} text={message} />}
+      {alertMsg.msg !== "" && <AlertMessage type={alertMsg.statut} text={alertMsg.msg} />}
       <form
         className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2"
         data-aos="fade"
