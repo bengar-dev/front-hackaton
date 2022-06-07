@@ -14,7 +14,7 @@ import "aos/dist/aos.css";
 AOS.init();
 
 export default function Register() {
-  
+
   const navigate = useNavigate();
   const dispatch = useDispatch()
 
@@ -56,9 +56,9 @@ export default function Register() {
         type: "ALERTMSG",
         payload: msgError
       })
-      if(alertMsg.type === "register") {
+      if(msgError.type === "register") {
         setTimeout(() => {
-          navigate('/Login')
+          navigate('/')
         }, 1500)
       }
     }, 1000);
@@ -71,14 +71,13 @@ export default function Register() {
     if (props.type === "submit") {
       setLoaderState(true);
       postRegister(formContent, backendResponseHandler);
-    } else if (props.type === "classic") navigate("/login");
+    } else if (props.type === "classic") navigate("/");
   };
 
   // verification à la sortie du champ de l'username/email
   const handleVerifUsername = (e) => {
     verifUsername(e.target.value, backendResponseHandler);
   };
-
   return (
     <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
       {loaderState && <Loader />}

@@ -24,5 +24,17 @@ export function errorTranslator(errorCode, errorContent) {
                 statut: "error"
             }
         }
+
+        case "errVerifUsername": return {
+            type: "errRegister",
+            msg: "Erreur de communication avec le serveur",
+            statut: "error"
+        }
+
+        case "login": return {
+            type:"login",
+            msg: "Vous êtes bien authentifié",
+            statut: "valid"
+        }
     }
 }

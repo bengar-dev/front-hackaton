@@ -4,6 +4,8 @@ import AlertMessage from "../components/AlertMessage";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
 import { postLogin } from "../services/formServices";
+import { errorTranslator } from "../services/basicServices";
+import { useDispatch, useSelector } from "react-redux";
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -11,10 +13,14 @@ AOS.init();
 
 export default function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
 
   const [formContent, setFormContent] = useState({ login: "", password: "" });
   const [loaderState, setLoaderState] = useState(false);
   const [message, setMessage] = useState("");
+  const {alertMsg} = useSelector(state => ({
+    ...state.formReducer
+  }))
 
   function updateFormData(e) {
     const newFormContent = formContent;
@@ -31,20 +37,20 @@ export default function Login() {
       });
   }
 
-  function backendResponseHandler(response) {
+  const backendResponseHandler = (response) => {
     setTimeout(() => {
       setLoaderState(false);
-      if (response.type === "login") {
-        console.log('ok auth')
-        /*setError("valid");
-        setMessage(errorTranslator(404))*/
-      } else if (response === "false") {
-        console.log('erreur login')
-        /*setError("error");
-        setMessage("Erreur de communication avec le serveur");
+      const msgError = errorTranslator(response.type)
+      dispatch({
+        type: "ALERTMSG",
+        payload: msgError
+      })
+      if(msgError.type === "login") {
+        localStorage.setItem('userInfo', JSON.stringify(response))
         setTimeout(() => {
-          setMessage("");
-        }, 1500);*/
+          navigate('/')
+          window.location.reload(false)
+        }, 2000)
       }
     }, 1000);
   }
@@ -64,7 +70,7 @@ export default function Login() {
 
   return (
     <div className="relative top-0 min-h-screen bg-zinc-100 flex items-center justify-center">
-      {message !== "" && <AlertMessage type="error" text={message} />}
+      {alertMsg.msg !== "" && <AlertMessage type={alertMsg.statut} text={alertMsg.msg} />}
       {loaderState && <Loader />}
       <form
         className="bg-white rounded shadow-lg w-11/12 md:w-2/4 p-4 flex flex-col space-y-2"

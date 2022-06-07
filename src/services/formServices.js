@@ -8,14 +8,19 @@ export const postLogin = (content, responseHandler) => {
   })
   .then((response) => (response.json()))
   .then(answer => {
-    const newAnswer = {
-      ...answer,
+    const userInfo = {
+      id: answer["3"],
+      username: answer["0"],
+      email: answer["1"],
       type: "login"
     }
-    responseHandler(newAnswer)
+    responseHandler(userInfo)
   })
   .catch(error => {
-    responseHandler("false")
+    const newError = {
+      type: "errRegister"
+    }
+    responseHandler(newError)
   })
 };
 
@@ -57,9 +62,13 @@ export const verifUsername = (content, responseHandler) => {
       input: answer,
       type: "verifUsername"
     }
+    console.log(newAnswer)
     responseHandler(newAnswer)
   })
   .catch((error) => {
-    responseHandler("false")
+    const newError = {
+      type: "errVerifUsername"
+    }
+    responseHandler(newError)
   })
 }
