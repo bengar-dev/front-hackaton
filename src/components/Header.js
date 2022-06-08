@@ -1,11 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TitleApp from './TitleApp'
 
 import { useDispatch, useSelector } from 'react-redux'
+import DropMenu from './DropMenu'
 
 export default function Header() {
 
   const dispatch = useDispatch()
+  const [toggle, setToggle] = useState(true)
   const {userInfo} = useSelector(state => ({
     ...state.userReducer
   }))
@@ -27,9 +29,12 @@ export default function Header() {
   })
 
   return (
-    <header className="p-4 bg-zinc-800 flex items-center justify-between">
+    <header className="relative h-16 p-2 bg-zinc-800 flex items-center justify-between">
         <TitleApp />
-        <p className="text-white">Bonjour, <button className="font-medium">Benoit</button></p>
+        <p className="text-white">Bonjour, <button 
+        onClick={(e) => e.preventDefault(setToggle(!toggle))}
+        className="font-medium">{userInfo.username}</button></p>
+        {toggle && <DropMenu />}    
     </header>
   )
 }

@@ -71,3 +71,19 @@ export const verifUsername = (content, responseHandler) => {
     responseHandler(newError)
   })
 }
+
+export const searchProduct = (content) => {
+  fetch(`${BACKEND_ROOT}/api/research.php`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(content)
+  })
+  .then((response) => {
+    console.log(response)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
+}

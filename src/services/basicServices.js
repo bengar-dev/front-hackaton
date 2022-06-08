@@ -38,3 +38,12 @@ export function errorTranslator(errorCode, errorContent) {
         }
     }
 }
+
+export function logoutApp() {
+    const getStorage = localStorage.getItem('userInfo')
+    if(getStorage) {
+        localStorage.removeItem('userInfo')
+        return true
+    }
+    else return false
+}
