@@ -13,9 +13,6 @@ function App() {
   const isAuth = localStorage.getItem("userInfo");
   return (
     <>
-      <h1 className="absolute z-40 p-2 w-full text-center font-medium text-xl">
-        Hackathon 2022
-      </h1>
       {isAuth == null ? (
         <Routes>
           <Route path="/" element={<Login />} />

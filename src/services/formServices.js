@@ -62,7 +62,6 @@ export const verifUsername = (content, responseHandler) => {
       input: answer,
       type: "verifUsername"
     }
-    console.log(newAnswer)
     responseHandler(newAnswer)
   })
   .catch((error) => {

@@ -5,12 +5,13 @@ import Loader from "../components/Loader";
 import Button from "../components/Button";
 
 import { useSelector, useDispatch } from "react-redux";
-import { errorTranslator } from "../services/basicServices";
+import { errorTranslator, hideAlert } from "../services/basicServices";
 import { postRegister, verifUsername } from "../services/formServices";
 import AlertMessage from "../components/AlertMessage";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import TitleApp from "../components/TitleApp";
 AOS.init();
 
 export default function Register() {
@@ -59,7 +60,24 @@ export default function Register() {
       if(msgError.type === "register") {
         setTimeout(() => {
           navigate('/')
+          dispatch({
+            type: "ALERTMSG",
+            payload: {
+              ...msgError,
+              msg: ""
+            }
+          })
         }, 1500)
+      } else {
+        setTimeout(() => {
+          dispatch({
+            type: "ALERTMSG",
+            payload: {
+              ...msgError,
+              msg: ""
+            }
+          })
+        }, 2000)
       }
     }, 1000);
   }
@@ -79,7 +97,8 @@ export default function Register() {
     verifUsername(e.target.value, backendResponseHandler);
   };
   return (
-    <div className="min-h-screen bg-zinc-100 flex items-center justify-center">
+    <div className="min-h-screen bg-zinc-100 flex flex-col space-y-4 items-center justify-center">
+      <TitleApp />
       {loaderState && <Loader />}
       {alertMsg.msg !== "" && <AlertMessage type={alertMsg.statut} text={alertMsg.msg} />}
       <form

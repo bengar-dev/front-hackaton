@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { postLogin } from "../services/formServices";
+import { errorTranslator } from "../services/basicServices";
+
+
 import AlertMessage from "../components/AlertMessage";
 import Button from "../components/Button";
 import Loader from "../components/Loader";
-import { postLogin } from "../services/formServices";
-import { errorTranslator } from "../services/basicServices";
-import { useDispatch, useSelector } from "react-redux";
+import TitleApp from "../components/TitleApp";
 
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -69,7 +72,8 @@ export default function Login() {
   };
 
   return (
-    <div className="relative top-0 min-h-screen bg-zinc-100 flex items-center justify-center">
+    <div className="min-h-screen bg-zinc-100 flex flex-col space-y-4 items-center justify-center">
+      <TitleApp />
       {alertMsg.msg !== "" && <AlertMessage type={alertMsg.statut} text={alertMsg.msg} />}
       {loaderState && <Loader />}
       <form
