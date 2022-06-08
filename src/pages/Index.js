@@ -19,7 +19,11 @@ export default function Index() {
     const handleSearch = (e) => {
       e.preventDefault()
       async function awaitGetArrayProducts() {
-        const result = await searchProducts(searchValue)
+        const result = await searchProducts({
+          resultPerPage: 20,
+          pageNumber: 1,
+          searchTerm: searchValue
+        })
         if(!result) {
           console.log('erreur')
         } else {
