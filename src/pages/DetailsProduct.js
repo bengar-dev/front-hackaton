@@ -53,9 +53,6 @@ export default function DetailsProduct() {
     else img = Nutri
   }
 
-
-  console.log(product)
-
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />

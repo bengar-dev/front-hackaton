@@ -19,9 +19,13 @@ export default function Index() {
     }))
 
     async function awaitGetArrayProducts() {
-      const result = await searchProducts(searchValue)
+      const result = await searchProducts({
+        resultPerPage: 20,
+        pageNumber: 1,
+        searchTerm: searchValue,
+      })
       if(!result) {
-        console.log('erreur')
+        console.log(result)
       } else {
         dispatch({
           type: "GETPRODUCTSARRAY",
@@ -29,13 +33,6 @@ export default function Index() {
         })
       }
     }
-
-    /*{
-          resultPerPage: 20,
-          pageNumber: 1,
-          searchTerm: searchValue,
-          
-        }*/
 
     const handleSearch = (e) => {
       e.preventDefault()

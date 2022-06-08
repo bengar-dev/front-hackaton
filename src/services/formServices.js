@@ -103,6 +103,7 @@ export const searchProducts = (content) => {
     return JSON.parse(answer)
   })
   .catch((error) => {
+    console.log(error)
     return false
   })
 }
