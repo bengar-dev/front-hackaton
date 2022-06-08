@@ -73,6 +73,7 @@ export const verifUsername = (content, responseHandler) => {
 }
 
 export const forgotPassword = (content) => {
+  console.log(content)
   fetch(`${BACKEND_ROOT}/user/resetpassword.php`, {
     method: "POST",
     headers: {

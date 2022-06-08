@@ -24,7 +24,7 @@ export default function ForgotPassword() {
     e.preventDefault()
     const props = JSON.parse(e.target.value);
     if(props.type === "submit") {
-      forgotPassword(e.target.value)
+      forgotPassword(inputPass)
     }
     else if(props.type === "classic") navigate('/')
   }

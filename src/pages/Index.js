@@ -41,6 +41,8 @@ export default function Index() {
       popularityProduct(content)
     }
 
+    console.log(productArray.products)
+
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
@@ -56,11 +58,15 @@ export default function Index() {
           <FaSearch className="mr-2"/> Chercher
         </button>
       </form>
-      <main>
+      <main className="w-full">
         <button
         onClick={(e) => e.preventDefault(handleCompare())}
         className="bg-blue-300">Comparer</button>
-        {productArray.products !== undefined && productArray.products.map(el => <Article key={el.code} title={el.product_name}/>)}
+        <div className="flex flex-col items-center p-4 w-full">
+        {productArray.products !== undefined && productArray.products.slice(0, 10).map(el => (
+            <Article key={el.code} nutri={el.nutrition_grade_fr} image={el.image_url} name={el.product_name} stores={el.stores}/>
+        ))}
+        </div>
       </main>
     </div>
   )
