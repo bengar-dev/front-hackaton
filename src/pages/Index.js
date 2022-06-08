@@ -46,8 +46,8 @@ export default function Index() {
 
     const handleCompare = () => {
       const content = {
-        id1: "7613032655495",
-        id2: "3067140013120"
+        id1: "5038862130929",
+        id2: "8002270014901"
       }
       popularityProduct(content)
     }

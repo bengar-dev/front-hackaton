@@ -63,7 +63,7 @@ export default function DetailsProduct() {
       onClick={(e) => e.preventDefault(navigate('/'))}
       className="transition-all duration-200 mr-2 md:mr-20 ml-auto mt-4 flex items-center bg-orange-300 hover:bg-orange-400 p-2 rounded-full"><MdOutlineArrowBackIosNew /></button>
       {product && (
-        <div className="mt-2 w-full md:w-5/12 p-4 flex items-center justify-center">
+        <div className="mt-2 w-full md:w-7/12 lg:w-5/12 p-4 flex items-center justify-center">
           <div className="p-4 w-full bg-white rounded-lg flex flex-col space-y-6 items-center justify-center">
             <h1 className="font-bold text-xl">{product.product_name_fr}</h1>
             <img src={product.image_url} className="w-auto max-h-60 rounded-lg shadow-lg"/>
