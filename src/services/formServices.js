@@ -72,18 +72,36 @@ export const verifUsername = (content, responseHandler) => {
   })
 }
 
-export const searchProduct = (content) => {
-  fetch(`${BACKEND_ROOT}/api/research.php`, {
+export const forgotPassword = (content) => {
+  fetch(`${BACKEND_ROOT}/user/resetpassword.php`, {
     method: "POST",
     headers: {
       "Accept": "application/json",
     },
     body: JSON.stringify(content)
   })
-  .then((response) => {
-    console.log(response)
+    .then((response) => response.json())
+    .then(answer => {
+      console.log(answer)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+}
+
+export const searchProduct = (content) => {
+  return fetch(`${BACKEND_ROOT}/api/research.php`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(content)
+  })
+  .then((response) => response.json())
+  .then(answer => {
+    return JSON.parse(answer)
   })
   .catch((error) => {
-    console.log(error)
+    return false
   })
 }

@@ -44,6 +44,5 @@ export function logoutApp() {
     if(getStorage) {
         localStorage.removeItem('userInfo')
         return true
-    }
-    else return false
+    } else return false
 }

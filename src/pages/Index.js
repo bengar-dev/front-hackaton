@@ -2,41 +2,55 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
+import {FaSearch} from 'react-icons/fa'
 import Header from '../components/Header'
 import { searchProduct } from '../services/formServices'
+import Article from '../components/Article'
 
 export default function Index() {
 
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const [searchValue, setSearchValue] = useState("")
-
-    useEffect(() => {
-        if(!localStorage.getItem('userInfo')) navigate('/')
-        else {
-            console.log('ok')
-        }
-    })
+    const {productArray} = useSelector(state => ({
+      ...state.productReducer
+    }))
 
     const handleSearch = (e) => {
       e.preventDefault()
-      searchProduct(searchValue)
+      async function awaitGetArrayProducts() {
+        const result = await searchProduct(searchValue)
+        if(!result) {
+          console.log('erreur')
+        } else {
+          dispatch({
+            type: "GETPRODUCTSARRAY",
+            payload: result
+          })
+        }
+      }
+      awaitGetArrayProducts()
+      setSearchValue("")
     }
 
   return (
-    <div className="min-h-screen bg-zinc-100 flex flex-col">
+    <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
-      <form className="mt-6 w-full p-4 flex items-center justify-center">
+      <form className="mt-6 w-full md:w-2/3 p-4 flex items-center justify-center">
         <input 
         onChange={(e) => setSearchValue(e.target.value)}
         value={searchValue}
-        className="w-9/12 p-2"
-        type="search" id="search" name="search" />
+        className="transition-all text-sm w-9/12 md:w-6/12 p-2 outline-none focus:bg-blue-100"
+        type="search" id="search" name="search" placeholder="Produit..." />
         <button
         onClick={(e) => handleSearch(e)}
-        className="p-2 bg-blue-400 text-white w-3/12">
-          Chercher
+        className="transition-all text-sm flex items-center p-2 bg-blue-400 hover:bg-blue-500 text-white ">
+          <FaSearch className="mr-2"/> Chercher
         </button>
       </form>
+      <main>
+        {productArray.products !== undefined && productArray.products.map(el => <Article key={el.code} title={el.product_name}/>)}
+      </main>
     </div>
   )
 }
