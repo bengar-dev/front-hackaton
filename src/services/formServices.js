@@ -105,3 +105,17 @@ export const searchProduct = (content) => {
     return false
   })
 }
+
+export const popularityProduct = (content) => {
+  fetch(`${BACKEND_ROOT}/api/popularity.php`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(content)
+  })
+    .then((response) => response.json())
+    .then(answer => {
+      console.log(answer)
+    })
+}

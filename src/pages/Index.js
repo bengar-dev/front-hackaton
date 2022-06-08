@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import {FaSearch} from 'react-icons/fa'
 import Header from '../components/Header'
-import { searchProduct } from '../services/formServices'
+import { popularityProduct, searchProduct } from '../services/formServices'
 import Article from '../components/Article'
 
 export default function Index() {
@@ -33,6 +33,14 @@ export default function Index() {
       setSearchValue("")
     }
 
+    const handleCompare = () => {
+      const content = {
+        id1: "7613032655495",
+        id2: "3067140013120"
+      }
+      popularityProduct(content)
+    }
+
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
@@ -49,6 +57,9 @@ export default function Index() {
         </button>
       </form>
       <main>
+        <button
+        onClick={(e) => e.preventDefault(handleCompare())}
+        className="bg-blue-300">Comparer</button>
         {productArray.products !== undefined && productArray.products.map(el => <Article key={el.code} title={el.product_name}/>)}
       </main>
     </div>
