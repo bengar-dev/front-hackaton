@@ -5,6 +5,8 @@ import { searchOneProduct } from "../services/formServices";
 import { FaTimesCircle } from "react-icons/fa";
 import { GiWheat } from "react-icons/gi";
 
+import Header from "../components/Header";
+
 import NutriA from "../assets/640px-Nutri-score-A.svg.png";
 import NutriB from "../assets/640px-Nutri-score-B.svg.png";
 import NutriC from "../assets/640px-Nutri-score-C.svg.png";
@@ -12,7 +14,7 @@ import NutriD from "../assets/640px-Nutri-score-D.svg.png";
 import NutriE from "../assets/640px-Nutri-score-E.svg.png";
 import Nutri from "../assets/640px-Nutri-score.png";
 
-export default function DetailsProduct(props) {
+export default function DetailsProduct() {
   const params = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState(false);
@@ -21,10 +23,8 @@ export default function DetailsProduct(props) {
 
   useEffect(() => {
 
-    console.log(props.hide)
-
     async function awaitOneProduct() {
-      const result = await searchOneProduct(props.code);
+      const result = await searchOneProduct(params.code);
       if (!result) console.log("produit non trouvé");
       else {
         setProduct(result.products[0]);
@@ -55,13 +55,15 @@ export default function DetailsProduct(props) {
   }
 
   return (
-    <div className="transition-all absolute top-0 z-60 -left-96 md:-left-96">
+    <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
+      <Header />
       {product && (
-        <div className="mt-2 w-96 p-4 flex items-center justify-center">
+        <div className="mt-2 w-full p-4 flex items-center justify-center">
           <div className="p-4 w-full bg-white border-2 border-zinc-800 shadow-xl rounded-lg flex flex-col space-y-6 items-center justify-center">
             <button 
+            onClick={(e) => e.preventDefault(navigate('/'))}
             className="text-xl ml-auto mr-0 text-red-500 hover:text-red-600"
-            onClick={props.func()}>
+            >
               <FaTimesCircle />
             </button>
             <h1 className="font-bold text-xl">{product.product_name_fr}</h1>

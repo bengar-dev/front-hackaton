@@ -6,6 +6,7 @@ import {FaSearch} from 'react-icons/fa'
 import Header from '../components/Header'
 import { popularityProduct, searchProducts } from '../services/formServices'
 import Article from '../components/Article'
+import DetailsProduct from './DetailsProduct'
 
 export default function Index() {
 
@@ -14,6 +15,7 @@ export default function Index() {
     const [searchValue, setSearchValue] = useState("")
     const [tempValue, setTempValue] = useState("")
     const [pageNbr, setPageNbr] = useState(1)
+    const [toggle, setToggle] = useState(false)
     const {productArray} = useSelector(state => ({
       ...state.productReducer
     }))

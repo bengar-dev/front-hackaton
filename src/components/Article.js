@@ -13,7 +13,6 @@ export default function Article(props) {
 
   const navigate = useNavigate()
   const [toggle, setToggle] = useState(false)
-  const [statut, setStatut] = useState(false)
   
   let img = ""
 
@@ -25,14 +24,11 @@ export default function Article(props) {
   else img = Nutri
 
   const handleDetails = () => {
-    setToggle(!toggle)
+    console.log('hello')
   }
 
   return (
     <article className="mt-4 mr-2 transition-all duration-200 w-full md:w-80 md:h-72 md:min-h-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">
-        {toggle && (
-          <DetailsProduct func={handleDetails()} code={props.code} hide={statut}/>
-        )}
         <div className="w-full flex">
           <div className="p-2 w-1/4 flex justify-center">
             <img src={props.image} className="h-32 object-cover ml-auto mr-auto"/>
@@ -41,8 +37,12 @@ export default function Article(props) {
         </div>
         <img src={img} className="p-2 w-24 ml-0 mr-auto"/>
         <p className="text-xs w-full p-1">Disponible chez : <span className="font-medium">{props.stores}</span></p>
+        <button
+        className="transition-all w-full p-1 bg-blue-800 md:mb-0 md:mt-auto hover:bg-blue-900 font-medium text-white">
+          Comparer
+        </button>
         <button 
-        onClick={(e) => e.preventDefault(handleDetails())}
+        onClick={(e) => e.preventDefault(navigate(`/product/${props.code}`))}
         className="transition-all w-full rounded-b-lg p-1 bg-blue-400 md:mb-0 md:mt-auto hover:bg-blue-500 font-medium text-white">Fiche détails</button>
     </article>
   )

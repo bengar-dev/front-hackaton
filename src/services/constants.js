@@ -1,6 +1,6 @@
 // Constants File
 
-export const BACKEND_ROOT = "http://localhost/back-hackathon/private"
+export const BACKEND_ROOT = "http://localhost/back-hackaton/private"
 
 export const ALERT_MESSAGE_TYPES = ["comment", "error", "success", "warning", "unknown"]
 
