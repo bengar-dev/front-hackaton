@@ -49,6 +49,7 @@ export default function Login() {
         payload: msgError
       })
       if(msgError.type === "login") {
+        
         localStorage.setItem('userInfo', JSON.stringify(response))
         setTimeout(() => {
           navigate('/')

@@ -7,7 +7,6 @@ import NutriC from '../assets/640px-Nutri-score-C.svg.png'
 import NutriD from '../assets/640px-Nutri-score-D.svg.png'
 import NutriE from '../assets/640px-Nutri-score-E.svg.png'
 import Nutri from '../assets/640px-Nutri-score.png'
-import DetailsProduct from '../pages/DetailsProduct'
 
 export default function Article(props) {
 
@@ -22,10 +21,6 @@ export default function Article(props) {
   else if(props.nutri === "d") img = NutriD
   else if(props.nutri === "e") img = NutriE
   else img = Nutri
-
-  const handleDetails = () => {
-    console.log('hello')
-  }
 
   return (
     <article className="mt-4 mr-2 transition-all duration-200 w-full md:w-80 md:h-72 md:min-h-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">

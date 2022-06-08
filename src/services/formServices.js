@@ -9,9 +9,9 @@ export const postLogin = (content, responseHandler) => {
   .then((response) => (response.json()))
   .then(answer => {
     const userInfo = {
-      id: answer["3"],
-      username: answer["0"],
-      email: answer["1"],
+      id: answer["0"],
+      username: answer["1"],
+      email: answer["2"],
       type: "login"
     }
     responseHandler(userInfo)
