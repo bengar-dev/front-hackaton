@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 
 import NutriA from '../assets/640px-Nutri-score-A.svg.png'
@@ -7,10 +7,13 @@ import NutriC from '../assets/640px-Nutri-score-C.svg.png'
 import NutriD from '../assets/640px-Nutri-score-D.svg.png'
 import NutriE from '../assets/640px-Nutri-score-E.svg.png'
 import Nutri from '../assets/640px-Nutri-score.png'
+import DetailsProduct from '../pages/DetailsProduct'
 
 export default function Article(props) {
 
   const navigate = useNavigate()
+  const [toggle, setToggle] = useState(false)
+  const [statut, setStatut] = useState(false)
   
   let img = ""
 
@@ -22,11 +25,14 @@ export default function Article(props) {
   else img = Nutri
 
   const handleDetails = () => {
-    navigate(`/product/${props.code}`)
+    setToggle(!toggle)
   }
 
   return (
     <article className="mt-4 mr-2 transition-all duration-200 w-full md:w-80 md:h-72 md:min-h-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">
+        {toggle && (
+          <DetailsProduct func={handleDetails()} code={props.code} hide={statut}/>
+        )}
         <div className="w-full flex">
           <div className="p-2 w-1/4 flex justify-center">
             <img src={props.image} className="h-32 object-cover ml-auto mr-auto"/>
