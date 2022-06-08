@@ -12,28 +12,35 @@ export default function Index() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [searchValue, setSearchValue] = useState("")
+    const [tempValue, setTempValue] = useState("")
+    const [pageNbr, setPageNbr] = useState(1)
     const {productArray} = useSelector(state => ({
       ...state.productReducer
     }))
 
-    const handleSearch = (e) => {
-      e.preventDefault()
-      async function awaitGetArrayProducts() {
-        const result = await searchProducts({
+    async function awaitGetArrayProducts() {
+      const result = await searchProducts(searchValue)
+      if(!result) {
+        console.log('erreur')
+      } else {
+        dispatch({
+          type: "GETPRODUCTSARRAY",
+          payload: result
+        })
+      }
+    }
+
+    /*{
           resultPerPage: 20,
           pageNumber: 1,
-          searchTerm: searchValue
-        })
-        if(!result) {
-          console.log('erreur')
-        } else {
-          dispatch({
-            type: "GETPRODUCTSARRAY",
-            payload: result
-          })
-        }
-      }
+          searchTerm: searchValue,
+          
+        }*/
+
+    const handleSearch = (e) => {
+      e.preventDefault()
       awaitGetArrayProducts()
+      setTempValue(searchValue)
       setSearchValue("")
     }
 
@@ -44,6 +51,21 @@ export default function Index() {
       }
       popularityProduct(content)
     }
+
+    const infiniteCheck = () => { // scroll infinite
+      const {scrollTop, scrollHeight, clientHeight} = document.documentElement
+      if(scrollHeight - scrollTop === clientHeight) {
+        setPageNbr((value) => value + 1)
+        awaitGetArrayProducts()
+      }
+    }
+
+    useEffect(() => { // scroll infinite
+      window.addEventListener('scroll', infiniteCheck)
+      return() => {
+          window.removeEventListener('scroll', infiniteCheck)
+      }
+  }, [])
 
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
@@ -64,7 +86,7 @@ export default function Index() {
         <button
         onClick={(e) => e.preventDefault(handleCompare())}
         className="bg-blue-300">Comparer</button>
-        <div className="flex flex-col items-center p-4 w-full">
+        <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center items-center p-4 w-full">
         {productArray.products !== undefined && productArray.products.slice(0, 10).map(el => (
             <Article key={el.code} code={el.code} nutri={el.nutrition_grade_fr} image={el.image_url} name={el.product_name_fr} stores={el.stores}/>
         ))}

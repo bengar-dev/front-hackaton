@@ -26,7 +26,7 @@ export default function Article(props) {
   }
 
   return (
-    <article className="transition-all duration-200 mt-10 w-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">
+    <article className="mt-4 mr-2 transition-all duration-200 w-full md:w-80 md:h-72 md:min-h-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">
         <div className="w-full flex">
           <div className="p-2 w-1/4 flex justify-center">
             <img src={props.image} className="h-32 object-cover ml-auto mr-auto"/>
@@ -37,7 +37,7 @@ export default function Article(props) {
         <p className="text-xs w-full p-1">Disponible chez : <span className="font-medium">{props.stores}</span></p>
         <button 
         onClick={(e) => e.preventDefault(handleDetails())}
-        className="transition-all w-full rounded-b-lg p-1 bg-blue-400 hover:bg-blue-500 font-medium text-white">Fiche détails</button>
+        className="transition-all w-full rounded-b-lg p-1 bg-blue-400 md:mb-0 md:mt-auto hover:bg-blue-500 font-medium text-white">Fiche détails</button>
     </article>
   )
 }

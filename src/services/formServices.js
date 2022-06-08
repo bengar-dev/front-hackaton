@@ -91,7 +91,6 @@ export const forgotPassword = (content) => {
 }
 
 export const searchProducts = (content) => {
-  console.log(content)
   return fetch(`${BACKEND_ROOT}/api/research.php`, {
     method: "POST",
     headers: {
