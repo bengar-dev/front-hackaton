@@ -90,7 +90,7 @@ export const forgotPassword = (content) => {
     })
 }
 
-export const searchProduct = (content) => {
+export const searchProducts = (content) => {
   return fetch(`${BACKEND_ROOT}/api/research.php`, {
     method: "POST",
     headers: {
@@ -103,6 +103,24 @@ export const searchProduct = (content) => {
     return JSON.parse(answer)
   })
   .catch((error) => {
+    return false
+  })
+}
+
+export const searchOneProduct = (code) => {
+  return fetch(`${BACKEND_ROOT}/api/product_code.php`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(code)
+  })
+  .then(response => response.json())
+  .then(answer => {
+    return JSON.parse(answer)
+  })
+  .catch(error => {
+    console.log(error)
     return false
   })
 }

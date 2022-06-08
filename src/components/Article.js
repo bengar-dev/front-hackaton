@@ -1,12 +1,16 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 
 import NutriA from '../assets/640px-Nutri-score-A.svg.png'
 import NutriB from '../assets/640px-Nutri-score-B.svg.png'
 import NutriC from '../assets/640px-Nutri-score-C.svg.png'
 import NutriD from '../assets/640px-Nutri-score-D.svg.png'
 import NutriE from '../assets/640px-Nutri-score-E.svg.png'
+import Nutri from '../assets/640px-Nutri-score.png'
 
 export default function Article(props) {
+
+  const navigate = useNavigate()
   
   let img = ""
 
@@ -15,6 +19,11 @@ export default function Article(props) {
   else if(props.nutri === "c") img = NutriC
   else if(props.nutri === "d") img = NutriD
   else if(props.nutri === "e") img = NutriE
+  else img = Nutri
+
+  const handleDetails = () => {
+    navigate(`/product/${props.code}`)
+  }
 
   return (
     <article className="transition-all duration-200 mt-10 w-full bg-white rounded-lg flex flex-col items-center hover:shadow-lg">
@@ -26,7 +35,9 @@ export default function Article(props) {
         </div>
         <img src={img} className="p-2 w-24 ml-0 mr-auto"/>
         <p className="text-xs w-full p-1">Disponible chez : <span className="font-medium">{props.stores}</span></p>
-        <button className="transition-all w-full rounded-b-lg p-1 bg-blue-400 hover:bg-blue-500 font-medium text-white">Fiche détails</button>
+        <button 
+        onClick={(e) => e.preventDefault(handleDetails())}
+        className="transition-all w-full rounded-b-lg p-1 bg-blue-400 hover:bg-blue-500 font-medium text-white">Fiche détails</button>
     </article>
   )
 }
