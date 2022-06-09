@@ -23,10 +23,10 @@ export default function DetailsProduct() {
 
   useEffect(() => {
 
-    async function awaitPosGoogle() {
+    async function awaitPosGoogle(tempProduct) {
       const result = await test({
-        stores: product.stores,
-        _keywords: product._keywords
+        stores: tempProduct.stores,
+        _keywords: tempProduct._keywords
       })
       if(!result) console.log('erreur')
       else {
@@ -38,6 +38,7 @@ export default function DetailsProduct() {
       const result = await searchOneProduct(params.code);
       if (!result) console.log("produit non trouvé");
       else {
+        awaitPosGoogle(result)
         setProduct(result);
         setNutri(result.nutrition_grade_fr);
         let allergens = ""
@@ -54,8 +55,7 @@ export default function DetailsProduct() {
       }
     }
     if (!product) {
-      awaitOneProduct();
-      awaitPosGoogle()
+      awaitOneProduct()
     }
   });
 

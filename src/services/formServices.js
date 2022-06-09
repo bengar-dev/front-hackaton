@@ -143,6 +143,7 @@ export const popularityProduct = (content) => {
 }
 
 export const test = (content) => {
+  console.log(content)
   return fetch(`${BACKEND_ROOT}/api/benchmark.php`, {
     method: "POST",
     headers: {
