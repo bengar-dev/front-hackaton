@@ -14,7 +14,7 @@ export function errorTranslator(errorCode, errorContent) {
         }
 
         case "errLogin": return {
-            type: "errRegister",
+            type: "errLogin",
             msg: "Identifiant / Mdp Incorrect",
             statut: "error"
         }
