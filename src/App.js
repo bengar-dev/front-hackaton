@@ -7,6 +7,7 @@ import CustomText from "./pages/CustomText";
 import Index from "./pages/Index";
 import ErrorPage from "./pages/404";
 import DetailsProduct from "./pages/DetailsProduct";
+import CompareProducts from "./pages/CompareProducts";
 
 function App() {
   //verification si notre utilisateur est auth
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/product/:code" element={<DetailsProduct />} />
+          <Route path="/compare/:code1/:code2" element={<CompareProducts />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       )}

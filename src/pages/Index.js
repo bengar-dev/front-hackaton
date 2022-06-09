@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FaSearch, FaTimes } from "react-icons/fa";
@@ -23,6 +23,23 @@ export default function Index() {
   const {alertMsg} = useSelector(state => ({
     ...state.formReducer
   }))
+
+  useEffect(() => {
+    setTimeout(() => {
+      const storageCompareCart = JSON.parse(localStorage.getItem("compareCart"))
+      if(storageCompareCart !== null) {
+        dispatch({
+          type: "PRODUCTSCOMPARE",
+          payload: storageCompareCart
+        })
+      }
+    }, 500)
+    // scroll infinite
+    window.addEventListener("scroll", infiniteCheck)
+    return () => {
+      window.removeEventListener("scroll", infiniteCheck)
+    };
+  }, []);
 
 
   async function awaitGetArrayProducts() {
@@ -49,11 +66,16 @@ export default function Index() {
   };
 
   const handleCompare = () => {
-    const content = {
+
+    if(productsCompare.length === 2) {
+      navigate(`/compare/${productsCompare[0].code}/${productsCompare[1].code}`)
+    }
+
+   /* const content = {
       id1: "5038862130929",
       id2: "8002270014901",
     };
-    popularityProduct(content);
+    popularityProduct(content);*/
   };
 
   const infiniteCheck = () => {
@@ -65,46 +87,46 @@ export default function Index() {
     }
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      const storageCompareCart = JSON.parse(localStorage.getItem("compareCart"))
-      if(storageCompareCart !== null) {
-        dispatch({
-          type: "PRODUCTSCOMPARE",
-          payload: storageCompareCart
-        })
-      }
-    }, 500)
-    // scroll infinite
-    window.addEventListener("scroll", infiniteCheck)
-    return () => {
-      window.removeEventListener("scroll", infiniteCheck)
-    };
-  }, []);
-
-  console.log(productsCompare)
+  const handleDeleteCompare = (e, code) => {
+    const findIndex = productsCompare.findIndex(p => p.code === code)
+    if(findIndex !== -1) {
+      const newArray = [...productsCompare]
+      newArray.splice(findIndex, 1)
+      dispatch({
+        type: "PRODUCTSCOMPARE",
+        payload: newArray
+      })
+      localStorage.setItem('compareCart', JSON.stringify(newArray))
+    }
+  }
 
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       {alertMsg.msg !== "" && <AlertMessage type={alertMsg.statut} text={alertMsg.msg} />}
       <Header />
-      {productsCompare.length >= 0 && (
+      {productsCompare.length > 0 && (
         <div className="shadow-lg mt-4 w-full md:w-2/3 bg-white flex justify-between border border-zinc-300 rounded-lg">
           <div className="w-full flex-col">
-            <div className="flex justify-between items-center p-1 pl-4 border-b">
-              <span>{productsCompare.length > 0 && productsCompare[0].name}</span>
+            {productsCompare.length > 0 && (
+              <div className="flex justify-between items-center p-1 pl-4 border-b text-xs font-medium">
+              <Link to={`/product/${productsCompare[0].code}`} className="">{productsCompare[0].name}</Link>
+                <button 
+                onClick={(e) => handleDeleteCompare(e, productsCompare[0].code)}
+                className="text-zinc-400">
+                  <FaTimes />
+                </button>
+              </div>
+            )}
+            {productsCompare.length > 1 && (
+            <div className="flex justify-between items-center p-1 pl-4 border-b text-xs font-medium">
+              <Link to={`/product/${productsCompare[1].code}`} className="">{productsCompare.length > 1 && productsCompare[1].name}</Link>
               <button 
-              onClick={(e) => e.preventDefault()}
+              onClick={(e) => handleDeleteCompare(e, productsCompare[1].code)}
               className="text-zinc-400">
                 <FaTimes />
               </button>
             </div>
-            <div className="flex justify-between items-center p-1 pl-4 border-b">
-              <span>{productsCompare.length > 1 && productsCompare[1].name}</span>
-              <button className="text-zinc-400">
-                <FaTimes />
-              </button>
-            </div>
+            )}
           </div>
           <button
             onClick={(e) => e.preventDefault(handleCompare())}
