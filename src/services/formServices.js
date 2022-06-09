@@ -119,7 +119,8 @@ export const searchOneProduct = (code) => {
   })
   .then(response => response.json())
   .then(answer => {
-    return JSON.parse(answer)
+    console.log(answer)
+    return answer
   })
   .catch(error => {
     console.log(error)
@@ -128,7 +129,7 @@ export const searchOneProduct = (code) => {
 }
 
 export const popularityProduct = (content) => {
-  fetch(`${BACKEND_ROOT}/api/popularity.php`, {
+  return fetch(`${BACKEND_ROOT}/api/popularity.php`, {
     method: "POST",
     headers: {
       "Accept": "application/json",
@@ -137,6 +138,24 @@ export const popularityProduct = (content) => {
   })
     .then((response) => response.json())
     .then(answer => {
-      console.log(answer)
+      return answer
     })
+}
+
+export const test = (content) => {
+  return fetch(`${BACKEND_ROOT}/api/benchmark.php`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(content)
+  })
+  .then(response => {
+    console.log(response)
+    return response
+  })
+  .catch(error => {
+    console.log(error)
+    return false
+  })
 }

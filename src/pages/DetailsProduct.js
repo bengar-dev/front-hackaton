@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { searchOneProduct } from "../services/formServices";
+import { searchOneProduct, test } from "../services/formServices";
 
-import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaArrowAltCircleLeft, FaCookieBite } from "react-icons/fa";
 import { GiWheat } from "react-icons/gi";
 
 import Header from "../components/Header";
@@ -23,23 +23,39 @@ export default function DetailsProduct() {
 
   useEffect(() => {
 
+    async function awaitPosGoogle() {
+      const result = await test({
+        stores: product.stores,
+        _keywords: product._keywords
+      })
+      if(!result) console.log('erreur')
+      else {
+        console.log(result)
+      }
+    }
+
     async function awaitOneProduct() {
       const result = await searchOneProduct(params.code);
       if (!result) console.log("produit non trouvé");
       else {
-        setProduct(result.products[0]);
-        setNutri(result.products[0].nutrition_grade_fr);
-        let allergens = "";
-        const newArrayAllergens = result.products[0].allergens.split(",");
-        const findLangage = newArrayAllergens.filter((p) => p.includes("en"));
-        findLangage.forEach((el) => {
-          allergens += el.replace("en:", " ");
-        });
-        setAlerg(allergens);
+        setProduct(result);
+        setNutri(result.nutrition_grade_fr);
+        let allergens = ""
+        if(result.allergens_imported === null) {
+          const newArrayAllergens = result.allergens.split(",");
+          const findLangage = newArrayAllergens.filter((p) => p.includes("en"));
+          findLangage.forEach((el) => {
+            allergens += el.replace("en:", " ");
+          });
+          setAlerg(allergens);
+        } else {
+          setAlerg(result.allergens_imported)
+        }
       }
     }
     if (!product) {
       awaitOneProduct();
+      awaitPosGoogle()
     }
   });
 
@@ -53,12 +69,13 @@ export default function DetailsProduct() {
     else if (nutri === "e") img = NutriE;
     else img = Nutri;
   }
+
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
       {product && (
         <div className="mt-2 w-full p-4 flex items-center justify-center">
-          <div className="p-4 w-full bg-white border border-zinc-300 shadow-xl rounded-lg flex flex-col space-y-6 items-center justify-center">
+          <div className="p-4 w-full md:w-2/3 lg:w-1/2 bg-white border border-zinc-300 shadow-xl rounded-lg flex flex-col space-y-6 items-center justify-center">
             <button 
             onClick={(e) => e.preventDefault(navigate('/'))}
             className="text-xl ml-auto mr-0 text-orange-400 hover:text-orange-600"
@@ -72,20 +89,21 @@ export default function DetailsProduct() {
               className="w-auto max-h-60 rounded-lg shadow-lg"
             />
             <p className="text-sm first-letter:font-bold">
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-              accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-              quae ab illo inventore veritatis et quasi architecto beatae vitae
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-              aspernatur aut odit aut fugit, sed quia consequuntur magni dolores
-              eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
+              {product.generic_name}
             </p>
             <p className="text-xs italic">{product.origin_fr}</p>
             <div className="w-full">
               <img src={img} alt="Nutriscore" className="w-12" />
             </div>
-            <div className="text-xs w-full flex items-center">
-              <GiWheat className="text-xl text-orange-400 mr-2" /> Allergens:{" "}
-              <span className="font-medium ml-1">{alerg}</span>
+            <div className="w-full flex flex-col">
+              <div className="text-xs w-full flex items-center">
+                  <FaCookieBite className="text-xl text-orange-400 mr-2" /> Ingrédients:{" "}
+                  <span className="font-medium ml-1">{product.ingredients_text_fr.replaceAll('_', '')}</span>
+                </div>
+              <div className="text-xs w-full flex items-center">
+                <GiWheat className="text-xl text-orange-400 mr-2" /> Allergens:{" "}
+                <span className="font-medium ml-1">{alerg}</span>
+              </div>
             </div>
           </div>
         </div>
