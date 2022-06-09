@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-    productArray: []
+    productArray: [],
+    productsCompare: []
 }
 
 function productReducer(state = INITIAL_STATE, action) {
@@ -10,6 +11,14 @@ function productReducer(state = INITIAL_STATE, action) {
                 ...state,
                 productArray: action.payload
             }   
+        }
+
+        case 'PRODUCTSCOMPARE': {
+
+            return {
+                ...state,
+                productsCompare: action.payload
+            }
         }
     }
 

@@ -9,9 +9,9 @@ export const postLogin = (content, responseHandler) => {
   .then((response) => (response.json()))
   .then(answer => {
     const userInfo = {
-      id: answer["0"],
-      username: answer["1"],
-      email: answer["2"],
+      id: answer.id,
+      username: answer.th_user_pseudo,
+      email: answer.th_user_email,
       type: "login"
     }
     responseHandler(userInfo)
@@ -91,6 +91,7 @@ export const forgotPassword = (content) => {
 }
 
 export const searchProducts = (content) => {
+  console.log(content)
   return fetch(`${BACKEND_ROOT}/api/research.php`, {
     method: "POST",
     headers: {
@@ -98,9 +99,9 @@ export const searchProducts = (content) => {
     },
     body: JSON.stringify(content)
   })
-  .then((response) => response.json())
+  .then(response => response.json())
   .then(answer => {
-    return JSON.parse(answer)
+    return answer
   })
   .catch((error) => {
     console.log(error)

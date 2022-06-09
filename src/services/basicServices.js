@@ -36,6 +36,12 @@ export function errorTranslator(errorCode, errorContent) {
             msg: "Vous êtes bien authentifié",
             statut: "valid"
         }
+
+        case "errCompare": return {
+            type: "errCompage",
+            msg: "Enlever un produit à comparer",
+            statut: "error"
+        }
     }
 }
 

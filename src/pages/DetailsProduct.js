@@ -69,6 +69,7 @@ export default function DetailsProduct() {
             <h1 className="font-bold text-xl">{product.product_name_fr}</h1>
             <img
               src={product.image_url}
+              alt={`${product.name}`}
               className="w-auto max-h-60 rounded-lg shadow-lg"
             />
             <p className="text-sm first-letter:font-bold">
@@ -81,7 +82,7 @@ export default function DetailsProduct() {
             </p>
             <p className="text-xs italic">{product.origin_fr}</p>
             <div className="w-full">
-              <img src={img} className="w-12" />
+              <img src={img} alt="Nutriscore" className="w-12" />
             </div>
             <div className="text-xs w-full flex items-center">
               <GiWheat className="text-xl text-orange-400 mr-2" /> Allergens:{" "}

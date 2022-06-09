@@ -12,7 +12,7 @@ export default function AlertMessage(props) {
   else if(props.type === "valid") classAlertMsg = "bg-emerald-400"
 
   return (
-    <div className={`absolute top-20 right-20 shadow-lg p-2 rounded flex items-center justify-center ${classAlertMsg}`} data-aos="fade-down" data-aos-duration='500'>
+    <div className={`fixed top-20 right-20 shadow-lg p-2 rounded flex items-center justify-center ${classAlertMsg}`} data-aos="fade-down" data-aos-duration='500'>
       <p className="text-sm font-medium">
         {props.text}
       </p>
