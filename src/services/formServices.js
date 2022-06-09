@@ -18,7 +18,7 @@ export const postLogin = (content, responseHandler) => {
   })
   .catch(error => {
     const newError = {
-      type: "errRlogin"
+      type: "errLogin"
     }
     responseHandler(newError)
   })
