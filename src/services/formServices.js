@@ -18,7 +18,7 @@ export const postLogin = (content, responseHandler) => {
   })
   .catch(error => {
     const newError = {
-      type: "errRegister"
+      type: "errRlogin"
     }
     responseHandler(newError)
   })
@@ -143,7 +143,6 @@ export const popularityProduct = (content) => {
 }
 
 export const test = (content) => {
-  console.log(content)
   return fetch(`${BACKEND_ROOT}/api/benchmark.php`, {
     method: "POST",
     headers: {

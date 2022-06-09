@@ -67,8 +67,9 @@ export default function Login() {
     } else if (props.type === "classic-alt") {
       navigate("/forgot_password");
     } else if (props.type === "submit") {
+      if(formContent.login !== "" && formContent.password !== "") {
       setLoaderState(true);
-      postLogin(formContent, backendResponseHandler);
+      postLogin(formContent, backendResponseHandler); }
     }
   };
 

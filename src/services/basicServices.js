@@ -13,6 +13,12 @@ export function errorTranslator(errorCode, errorContent) {
             statut: "error"
         }
 
+        case "errLogin": return {
+            type: "errRegister",
+            msg: "Identifiant / Mdp Incorrect",
+            statut: "error"
+        }
+
         case "verifUsername": {
             let msg = ""
             if(errorContent === 1) msg = "Username déjà existant"
