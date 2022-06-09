@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 
-import {FaSearch} from 'react-icons/fa'
+import {FaSearch, FaTimes} from 'react-icons/fa'
 import Header from '../components/Header'
 import { popularityProduct, searchProducts } from '../services/formServices'
 import Article from '../components/Article'
@@ -16,6 +16,7 @@ export default function Index() {
     const [tempValue, setTempValue] = useState("")
     const [pageNbr, setPageNbr] = useState(1)
     const [toggle, setToggle] = useState(false)
+    const [compareCart, setCompareCart] = useState("")
     const {productArray} = useSelector(state => ({
       ...state.productReducer
     }))
@@ -44,6 +45,7 @@ export default function Index() {
     }
 
     const handleCompare = () => {
+      
       const content = {
         id1: "5038862130929",
         id2: "8002270014901"
@@ -69,6 +71,17 @@ export default function Index() {
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
+      <div className="shadow-lg mt-4 w-full md:w-2/3 bg-white flex justify-between border border-zinc-300 rounded-lg">
+          <div className="w-full flex-col">
+            <div className="flex justify-between items-center p-1 pl-4 border-b"><span>Premiere item</span><button className="text-zinc-400"><FaTimes /></button></div>
+            <div className="flex justify-between items-center p-1 pl-4 border-b"><span>Deuxieme item</span><button className="text-zinc-400"><FaTimes /></button></div>
+          </div>
+          <button 
+          onClick={(e) => e.preventDefault(handleCompare())}
+          className="p-2 bg-green-400 hover:bg-emerald-400 rounded-br-lg rounded-tr-lg">
+            Comparer
+          </button>
+      </div>
       <form className="mt-6 w-full md:w-2/3 p-4 flex items-center justify-center">
         <input 
         onChange={(e) => setSearchValue(e.target.value)}
@@ -82,9 +95,6 @@ export default function Index() {
         </button>
       </form>
       <main className="w-full">
-        <button
-        onClick={(e) => e.preventDefault(handleCompare())}
-        className="bg-blue-300">Comparer</button>
         <div className="flex flex-col md:flex-row md:flex-wrap md:justify-center items-center p-4 w-full">
         {productArray.products !== undefined && productArray.products.slice(0, 10).map(el => (
             <Article key={el.code} code={el.code} nutri={el.nutrition_grade_fr} image={el.image_url} name={el.product_name_fr} stores={el.stores}/>
