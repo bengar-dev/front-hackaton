@@ -150,9 +150,9 @@ export const test = (content) => {
     },
     body: JSON.stringify(content)
   })
-  .then(response => {
-    console.log(response)
-    return response
+  .then(response => response.json())
+  .then(answer => {
+    return answer
   })
   .catch(error => {
     console.log(error)

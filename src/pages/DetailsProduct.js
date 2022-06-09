@@ -20,17 +20,19 @@ export default function DetailsProduct() {
   const [product, setProduct] = useState(false);
   const [alerg, setAlerg] = useState("");
   const [nutri, setNutri] = useState("");
+  const [concu, setConcu] = useState("")
 
   useEffect(() => {
 
     async function awaitPosGoogle(tempProduct) {
+      setConcu('Chargement en cours...')
       const result = await test({
         stores: tempProduct.stores,
         _keywords: tempProduct._keywords
       })
       if(!result) console.log('erreur')
       else {
-        console.log(result)
+        setConcu(result)
       }
     }
 
@@ -70,6 +72,8 @@ export default function DetailsProduct() {
     else img = Nutri;
   }
 
+  console.log(product)
+
   return (
     <div className="min-h-screen bg-zinc-100 flex flex-col items-center">
       <Header />
@@ -92,7 +96,7 @@ export default function DetailsProduct() {
               {product.generic_name}
             </p>
             <p className="text-xs italic">{product.origin_fr}</p>
-            <div className="w-full">
+            <div className="w-full flex space-x-6">
               <img src={img} alt="Nutriscore" className="w-12" />
             </div>
             <div className="w-full flex flex-col">
@@ -100,9 +104,13 @@ export default function DetailsProduct() {
                   <FaCookieBite className="text-xl text-orange-400 mr-2" /> Ingrédients:{" "}
                   <span className="font-medium ml-1">{product.ingredients_text_fr.replaceAll('_', '')}</span>
                 </div>
-              <div className="text-xs w-full flex items-center">
+              <div className="mt-2 text-xs w-full flex items-center">
                 <GiWheat className="text-xl text-orange-400 mr-2" /> Allergens:{" "}
                 <span className="font-medium ml-1">{alerg}</span>
+              </div>
+              <div className="mt-2 text-xs w-full flex items-center">
+                <GiWheat className="text-xl text-orange-400 mr-2" /> Disponible chez:{" "}
+                <p className="font-medium ml-1">{product.stores} | Plus populaire chez : {concu !== "Chargement en cours..." ? <span className="text-base text-red-500">{concu}</span> : <span className="text-base">{concu}</span>}</p>
               </div>
             </div>
           </div>
